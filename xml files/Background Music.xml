@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="Background Music" version_long="10000" version_human="1.0.0" author="Fm Web (Recouse)" website="http://fm-web.studio" update_check=""><hooks><hook type="S" class="\IPS\Theme\class_core_front_global" filename="fmwHook_backgroundMusic"><![CDATA[//<?php
+
+class hook71 extends _HOOK_CLASS_
+{
+
+/* !Hook Data - DO NOT REMOVE */
+public static function hookData() {
+ return array_merge_recursive( array (
+  'globalTemplate' => 
+  array (
+    0 => 
+    array (
+      'selector' => '#ipsLayout_header',
+      'type' => 'add_before',
+      'content' => '{template="backgroundMusic" group="plugins" location="global" app="core" params=""}',
+    ),
+  ),
+), parent::hookData() );
+}
+/* End Hook Data */
+
+
+
+
+}]]></hook></hooks><settings><setting><key>backgroundMusic_groups</key><default/></setting><setting><key>backgroundMusic_file</key><default/></setting><setting><key>backgroundMusic_loop</key><default>1</default></setting><setting><key>backgroundMusic_preload</key><default>1</default></setting><setting><key>backgroundMusic_fileLink</key><default/></setting></settings><settingsCode><![CDATA[//<?php
+
+// Groups
+$form->add( new \IPS\Helpers\Form\Select( 'backgroundMusic_groups', \IPS\Settings::i()->backgroundMusic_groups == '*' ? "*" : explode( ',', \IPS\Settings::i()->backgroundMusic_groups ), FALSE, array( 'options' => \IPS\Member\Group::groups( TRUE, FALSE ), 'parse' => 'normal', 'multiple' => true, 'unlimited' => '*', 'unlimitedLang' => 'all_groups' ), NULL, NULL, NULL, 'backgroundMusic_groups' ) );
+
+// File link
+$form->add( new \IPS\Helpers\Form\Text( 'backgroundMusic_fileLink', \IPS\Settings::i()->backgroundMusic_fileLink, FALSE, array( 'regex' => '!\.(wav|ogg|mp3)$!i' ) ) );
+
+// Other options
+$form->add( new \IPS\Helpers\Form\YesNo( 'backgroundMusic_loop', \IPS\Settings::i()->backgroundMusic_loop, FALSE ) );
+$form->add( new \IPS\Helpers\Form\YesNo( 'backgroundMusic_preload', \IPS\Settings::i()->backgroundMusic_preload, FALSE ) );
+
+if ( $values = $form->values() )
+{
+	$form->saveAsSettings();
+	return TRUE;
+}
+
+return $form;]]></settingsCode><htmlFiles><html filename="backgroundMusic.phtml">PGlwczp0ZW1wbGF0ZSBwYXJhbWV0ZXJzPSIiIC8+DQp7e2lmIGluX2FycmF5KCBtZW1iZXIubWVtYmVyX2dyb3VwX2lkLCBleHBsb2RlKCAnLCcsIHNldHRpbmdzLmJhY2tncm91bmRNdXNpY19ncm91cHMgKSApIHx8IHNldHRpbmdzLmJhY2tncm91bmRNdXNpY19ncm91cHMgPT0gIioifX0NCgk8YXVkaW8gc3JjPSJ7c2V0dGluZz0iYmFja2dyb3VuZE11c2ljX2ZpbGVMaW5rIn0iIGF1dG9wbGF5e3tpZiBzZXR0aW5ncy5iYWNrZ3JvdW5kTXVzaWNfbG9vcH19IGxvb3B7e2VuZGlmfX17e2lmIHNldHRpbmdzLmJhY2tncm91bmRNdXNpY19wcmVsb2FkfX0gcHJlbG9hZHt7ZW5kaWZ9fT4NCgkJPGRpdiBjbGFzcz0iaXBzTWVzc2FnZSBpcHNNZXNzYWdlX2Vycm9yIj4NCgkJCTxwPntsYW5nPSJiYWNrZ3JvdW5kTXVzaWNfZXJyb3IifTwvcD4NCgkJPC9kaXY+DQoJPC9hdWRpbz4NCnt7ZW5kaWZ9fQ==</html></htmlFiles><cssFiles/><jsFiles/><resourcesFiles/><lang><word key="backgroundMusic_groups" js="0">Enable for</word><word key="backgroundMusic_fileLink" js="0">File link</word><word key="backgroundMusic_fileLink_desc" js="0"><![CDATA[Enter the link to the music file. Support only <strong>.wav</strong>, <strong>.ogg</strong> and <strong>.mp3</strong> files]]></word><word key="backgroundMusic_loop" js="0">Enable loop?</word><word key="backgroundMusic_preload" js="0">Enable preload?</word><word key="backgroundMusic_error" js="0">Your browser does not support the audio element.</word></lang><versions><version long="10000" human="1.0.0"><![CDATA[//<?php
+
+
+/* To prevent PHP errors (extending class does not exist) revealing path */
+if ( !defined( '\IPS\SUITE_UNIQUE_KEY' ) )
+{
+	header( ( isset( $_SERVER['SERVER_PROTOCOL'] ) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0' ) . ' 403 Forbidden' );
+	exit;
+}
+
+/**
+ * Install Code
+ */
+class ips_plugins_setup_install
+{
+	/**
+	 * ...
+	 *
+	 * @return	array	If returns TRUE, upgrader will proceed to next step. If it returns any other value, it will set this as the value of the 'extra' GET parameter and rerun this step (useful for loops)
+	 */
+	public function step1()
+	{
+		
+
+		return TRUE;
+	}
+	
+	// You can create as many additional methods (step2, step3, etc.) as is necessary.
+	// Each step will be executed in a new HTTP request
+}]]></version></versions></plugin>
